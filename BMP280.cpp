@@ -2,7 +2,7 @@
 
 bool BMP280::init(void)
 {
-  Wire.begin();
+  WIREOBJ.begin();
 
   if(bmp280Read8(BMP280_REG_CHIPID) != 0x58)
     return false;
@@ -83,27 +83,27 @@ float BMP280::calcAltitude(float pressure)
 
 uint8_t BMP280::bmp280Read8(uint8_t reg)
 {
-  Wire.beginTransmission(BMP280_ADDRESS);
-  Wire.write(reg);
-  Wire.endTransmission();
+  WIREOBJ.beginTransmission(BMP280_ADDRESS);
+  WIREOBJ.write(reg);
+  WIREOBJ.endTransmission();
 
-  Wire.requestFrom(BMP280_ADDRESS, 1);
-  while(!Wire.available());
-  return Wire.read();
+  WIREOBJ.requestFrom(BMP280_ADDRESS, 1);
+  while(!WIREOBJ.available());
+  return WIREOBJ.read();
 }
 
 uint16_t BMP280::bmp280Read16(uint8_t reg)
 {
   uint8_t msb, lsb;
 
-  Wire.beginTransmission(BMP280_ADDRESS);
-  Wire.write(reg);
-  Wire.endTransmission();
+  WIREOBJ.beginTransmission(BMP280_ADDRESS);
+  WIREOBJ.write(reg);
+  WIREOBJ.endTransmission();
 
-  Wire.requestFrom(BMP280_ADDRESS, 2);
-  while(Wire.available()<2);
-  msb = Wire.read();
-  lsb = Wire.read();
+  WIREOBJ.requestFrom(BMP280_ADDRESS, 2);
+  while(WIREOBJ.available()<2);
+  msb = WIREOBJ.read();
+  lsb = WIREOBJ.read();
 
   return (uint16_t) msb<<8 | lsb;
 }
@@ -128,25 +128,25 @@ uint32_t BMP280::bmp280Read24(uint8_t reg)
 {
   uint32_t data;
 
-  Wire.beginTransmission(BMP280_ADDRESS);
-  Wire.write(reg);
-  Wire.endTransmission();
+  WIREOBJ.beginTransmission(BMP280_ADDRESS);
+  WIREOBJ.write(reg);
+  WIREOBJ.endTransmission();
 
-  Wire.requestFrom(BMP280_ADDRESS, 3);
-  while(Wire.available()<3);
-  data = Wire.read();
+  WIREOBJ.requestFrom(BMP280_ADDRESS, 3);
+  while(WIREOBJ.available()<3);
+  data = WIREOBJ.read();
   data <<= 8;
-  data |= Wire.read();
+  data |= WIREOBJ.read();
   data <<= 8;
-  data |= Wire.read();
+  data |= WIREOBJ.read();
 
   return data;
 }
 
 void BMP280::writeRegister(uint8_t reg, uint8_t val)
 {
-  Wire.beginTransmission(BMP280_ADDRESS); // start transmission to device
-  Wire.write(reg);       // send register address
-  Wire.write(val);         // send value to write
-  Wire.endTransmission();     // end transmission
+  WIREOBJ.beginTransmission(BMP280_ADDRESS); // start transmission to device
+  WIREOBJ.write(reg);       // send register address
+  WIREOBJ.write(val);         // send value to write
+  WIREOBJ.endTransmission();     // end transmission
 }

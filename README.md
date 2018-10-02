@@ -21,3 +21,8 @@ global distributors and partners to push open hardware movement.<br>
 
 
 [![Analytics](https://ga-beacon.appspot.com/UA-46589105-3/IMU_10DOF)](https://github.com/igrigorik/ga-beacon)
+
+# FLO modifications
+
+I modified this library to be able to use Wire1 instead of Wire on the Arduino Due.
+Reading the sensor did not work though, see [Engineering report](https://docs.google.com/document/d/1fMVZ2Zv9uSw3YMvibgBEe07t_GqF0OqStmgIItDfKuY/edit#).

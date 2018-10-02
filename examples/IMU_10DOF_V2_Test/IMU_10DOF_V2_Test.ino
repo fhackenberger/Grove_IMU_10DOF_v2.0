@@ -2,6 +2,9 @@
 
 // I2Cdev and MPU9250 must be installed as libraries, or else the .cpp/.h files
 // for both classes must be in the include path of your project
+//#if defined(ARDUINO_SAM_DUE)
+//#define WIREOBJ Wire1 // Select the second I2C port on the Arduino Due, which is near to AREF and connected to the Grove base shield
+//#endif
 #include "I2Cdev.h"
 #include "MPU9250.h"
 #include "BMP280.h"
@@ -18,7 +21,7 @@ uint8_t buffer_m[6];
 
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
-int16_t   mx, my, mz;
+int16_t mx, my, mz;
 
 
 
@@ -57,7 +60,7 @@ BMP280 bmp280;
 void setup()
 {
     // join I2C bus (I2Cdev library doesn't do this automatically)
-    Wire.begin();
+    WIREOBJ.begin();
 
     // initialize serial communication
     // (38400 chosen because it works as well at 8MHz as it does at 16MHz, but
@@ -67,6 +70,7 @@ void setup()
     // initialize device
     Serial.println("Initializing I2C devices...");
     accelgyro.initialize();
+    Serial.println("Done init accel & gyro");
     bmp280.init();
 
     // verify connection

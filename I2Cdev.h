@@ -108,6 +108,13 @@ class I2Cdev {
         static uint16_t readTimeout;
 };
 
+// The Arduino Due has two I2C ports: Wire and Wire1. Wire1 is wired next to AREF, where the only I2C port is on other Arduinos, so with the Grove shields Due users will need to use Wire1
+#if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
+#ifndef WIREOBJ
+#define WIREOBJ Wire
+#endif // ifndef WIREOBJ
+#endif // if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
+
 #if I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
     //////////////////////
     // FastWire 0.2

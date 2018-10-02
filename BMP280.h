@@ -4,6 +4,11 @@
 #include <Arduino.h>
 #include <Wire.h>
 
+// The Arduino Due has two I2C ports: Wire and Wire1. Wire1 is wired next to AREF, where the only I2C port is on other Arduinos, so with the Grove shields Due users will need to use Wire1
+#ifndef WIREOBJ
+#define WIREOBJ Wire
+#endif // ifndef WIREOBJ
+
 #define BMP280_ADDRESS   0x77
 
 #define BMP280_REG_DIG_T1    0x88
